@@ -37,12 +37,17 @@ namespace ChessMi.Core.Services
                         return move;
                     }
                 }
+                if(pawn.HaveMoved)
+                {
+                    return new MoveInfo(false);
+                }
                 if (pawn.Row - endPoint.Row == 2)
                 {
                     if (pawn.Column == endPoint.Column &&
                         IsEmpty(endPoint))
                     {
                         move.IsAllowed = true;
+                        pawn.HaveMoved = true;
                         return move;
                     }
                 }
