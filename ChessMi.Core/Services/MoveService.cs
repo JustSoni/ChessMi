@@ -66,5 +66,15 @@ namespace ChessMi.Core.Services
 
             return new MoveInfo(false);
         }
+
+        public void MakeMove(Tile[,] board, Figure figure, Figure endPoint, MoveInfo move)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MovesInBoard(int[] moves)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

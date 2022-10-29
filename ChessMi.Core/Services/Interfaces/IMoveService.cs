@@ -20,5 +20,7 @@ namespace ChessMi.Core.Services.Interfaces
         MoveInfo CheckLegalMove(Tile[,] board, King king, Figure endPoint);
 
         MoveInfo CheckLegalMove(Tile[,] board, Figure figure, Figure endPoint);
+        public bool MovesInBoard(int[] moves);
+        public void MakeMove(Tile[,] board, Figure figure, Figure endPoint, MoveInfo move);
     }
 }
