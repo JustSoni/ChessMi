@@ -115,7 +115,11 @@ namespace ChessMi.Core.Services
 
         public bool MovesInBoard(int[] moves)
         {
-            throw new NotImplementedException();
+            if (moves.Any(m => m > 7) || moves.Any(m => m < 0))
+            {
+                return false;
+            }
+            return true;
         }
 
         private bool IsEmpty(Figure figure)
