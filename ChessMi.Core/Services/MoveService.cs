@@ -186,7 +186,7 @@ namespace ChessMi.Core.Services
                 move.FigureTaken = true;
             }
 
-            if (Math.Abs(deltaRow) < 1 || Math.Abs(deltaColumn) < 1)
+            if (Math.Abs(deltaRow) < 2 && Math.Abs(deltaColumn) < 2)
             {
                 move.IsAllowed = true;
                 return move;
