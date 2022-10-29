@@ -8,6 +8,8 @@ namespace ChessMi.Core.Data.Models
             : base(row, column, color)
         {
             Name = "Rook";
+            HaveMoved = false;
         }
+        public bool HaveMoved { get; set; }
     }
 }
