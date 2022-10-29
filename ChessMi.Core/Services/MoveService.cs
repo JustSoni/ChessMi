@@ -110,7 +110,19 @@ namespace ChessMi.Core.Services
 
         public void MakeMove(Tile[,] board, Figure figure, Figure endPoint, MoveInfo move)
         {
-            throw new NotImplementedException();
+            board[figure.Row, figure.Column].Figure = endPoint;
+
+
+            board[endPoint.Row, endPoint.Column].Figure = figure;
+
+            int tempRow = figure.Row;
+            int tempColumn = figure.Column;
+
+            figure.Row = endPoint.Row;
+            figure.Column = endPoint.Column;
+
+            endPoint.Row = tempRow;
+            endPoint.Column = tempColumn;
         }
 
         public bool MovesInBoard(int[] moves)

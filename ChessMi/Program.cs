@@ -39,11 +39,11 @@ while (true)
         continue;
     }
 
-    int row1 = translatedMove[0];
-    int col1 = translatedMove[1];
+    int row1 = translatedMove[1];
+    int col1 = translatedMove[0];
 
-    int row2 = translatedMove[2];
-    int col2 = translatedMove[3];
+    int row2 = translatedMove[3];
+    int col2 = translatedMove[2];
 
     Figure source = board[row1, col1].Figure;
     Figure destination = board[row2, col2].Figure;
