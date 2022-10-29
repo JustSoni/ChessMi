@@ -31,8 +31,6 @@ while (true)
 
     int[] translatedMove = interpreter.Translate(moveInput);
 
-    Console.WriteLine(String.Join(' ', translatedMove.Select(x => x.ToString()).ToArray())); // Too see the coordinates
-
     if (!service.MovesInBoard(translatedMove))
     {
         Console.WriteLine("Invlaid move! There is no such tile!");
@@ -52,8 +50,8 @@ while (true)
 
     if (move.IsAllowed)
     {
-        service.MakeMove(board, source, destination, move); // TODO: NOT ADDED YET.
-        BoardDrawerService.DrawBoard(board); // ALSO NOT ADDED YET >.<
+        service.MakeMove(board, source, destination, move); 
+        BoardDrawerService.DrawBoard(board); 
     }
     else
     {

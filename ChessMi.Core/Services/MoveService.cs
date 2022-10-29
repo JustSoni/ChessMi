@@ -297,6 +297,7 @@ namespace ChessMi.Core.Services
                 }
 
                 move.IsAllowed = true;
+                rook.HaveMoved = true;
                 return move;
             }
 
@@ -319,6 +320,7 @@ namespace ChessMi.Core.Services
                 }
 
                 move.IsAllowed = true;
+                rook.HaveMoved = true;
                 return move;
             }
 
@@ -457,12 +459,23 @@ namespace ChessMi.Core.Services
 
         public MoveInfo CheckLegalMove(Tile[,] board, King king, Figure endPoint)
         {
+            MoveInfo move = new MoveInfo(false);
+
+            if (this.ColorMatches(king, endPoint) && endPoint.Name == "Rook")
+            {
+                king.HaveMoved = true;
+                Rook rook = (Rook)endPoint;
+                rook.HaveMoved = true;
+
+                move.IsAllowed = true;
+                return move;
+            }
+
             if (this.ColorMatches(king, endPoint))
             {
                 return new MoveInfo(false);
             }
 
-            MoveInfo move = new MoveInfo(false);
 
             if (!IsEmpty(endPoint)) // No matter what if there is a figure at the given position it will take it only if the move is valid.
             {
@@ -480,14 +493,10 @@ namespace ChessMi.Core.Services
             //TODO: Consider adding here if the move might be in check.
 
 
-            if (!IsEmpty(endPoint)) // No matter what if there is a figure at the given position it will take it only if the move is valid.
-            {
-                move.FigureTaken = true;
-            }
-
             if (Math.Abs(deltaRow) < 2 && Math.Abs(deltaColumn) < 2)
             {
                 move.IsAllowed = true;
+                king.HaveMoved = true;
                 return move;
             }
 
@@ -533,6 +542,12 @@ namespace ChessMi.Core.Services
 
         public void MakeMove(Tile[,] board, Figure figure, Figure endPoint, MoveInfo move)
         {
+            if (figure.Name == "King" && endPoint.Name == "Rook")
+            {
+                board = Castle(board, figure, endPoint);
+                return;
+            }
+
             if (move.FigureTaken)
             {
                 board[figure.Row, figure.Column].Figure = new Empty(figure.Row, figure.Column);
@@ -576,6 +591,7 @@ namespace ChessMi.Core.Services
             {
                 board = Promotion(board, figure);
             }
+
 
         }
 
@@ -626,6 +642,34 @@ namespace ChessMi.Core.Services
                     board[figure.Row, figure.Column].Figure = new Bishop(figure.Row, figure.Column, figure.Color);
                     break;
                 }
+            }
+
+            return board;
+        }
+        private Tile[,] Castle(Tile[,] board, Figure figure, Figure endPoint)
+        {
+            King king = (King)figure;
+            Rook rook = (Rook)endPoint;
+
+            if (king.HaveMoved || rook.HaveMoved)
+            {
+
+
+                board[king.Row, king.Column].Figure = new Empty(king.Row, king.Column);
+                board[rook.Row, rook.Column].Figure = new Empty(rook.Row, rook.Column);
+                if (king.Column > rook.Column)
+                {
+
+                    board[king.Row, king.Column - 2].Figure = new King(king.Row, king.Column, king.Color);
+                    board[king.Row, king.Column - 1].Figure = new Rook(rook.Row, rook.Column, rook.Color);
+                }
+                else
+                {
+
+                    board[king.Row, king.Column + 2].Figure = new King(king.Row, king.Column, king.Color);
+                    board[king.Row, king.Column + 1].Figure = new Rook(rook.Row, rook.Column, rook.Color);
+                }
+                return board;
             }
 
             return board;
