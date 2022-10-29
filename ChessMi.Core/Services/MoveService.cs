@@ -33,6 +33,7 @@ namespace ChessMi.Core.Services
                         !ColorMatches(pawn, endPoint))
                     {
                         move.IsAllowed = true;
+                        move.FigureTaken = true;
                         return move;
                     }
                 }
@@ -110,8 +111,14 @@ namespace ChessMi.Core.Services
 
         public void MakeMove(Tile[,] board, Figure figure, Figure endPoint, MoveInfo move)
         {
-            board[figure.Row, figure.Column].Figure = endPoint;
-
+            if (move.FigureTaken)
+            {
+                board[figure.Row, figure.Column].Figure = new Empty(figure.Row, figure.Column);
+            }
+            else
+            {
+                board[figure.Row, figure.Column].Figure = endPoint;
+            }
 
             board[endPoint.Row, endPoint.Column].Figure = figure;
 
