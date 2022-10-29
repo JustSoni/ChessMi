@@ -36,6 +36,23 @@ namespace ChessMi.Core.Services
                         move.FigureTaken = true;
                         return move;
                     }
+                    if (Math.Abs(endPoint.Column - pawn.Column) == 1 &&
+                        !IsEmpty(board[endPoint.Row + 1, endPoint.Column].Figure) && //Checks if the tile below has a Pawn.
+                        !ColorMatches(pawn, endPoint))
+                    {
+                        if(board[endPoint.Row + 1, endPoint.Column].Figure.Name=="Pawn")
+                        {
+                            Pawn takenPawn = (Pawn)board[endPoint.Row + 1, endPoint.Column].Figure;
+                            if (takenPawn.DoubleMove && takenPawn.MovesSinceDoubleMove == 1)
+                            {
+                                move.IsAllowed = true;
+                                move.FigureTaken = true;
+                                move.IsEnPassant = true;
+                                return move;
+                            }
+                        }
+                    }
+
                 }
                 if (pawn.HaveMoved)
                 {
@@ -48,6 +65,7 @@ namespace ChessMi.Core.Services
                     {
                         move.IsAllowed = true;
                         pawn.HaveMoved = true;
+                        pawn.DoubleMove = true;
                         return move;
                     }
                 }
@@ -74,6 +92,22 @@ namespace ChessMi.Core.Services
                         move.FigureTaken = true;
                         return move;
                     }
+                    if (Math.Abs(endPoint.Column - pawn.Column) == 1 &&
+                        !IsEmpty(board[endPoint.Row - 1, endPoint.Column].Figure) && //Checks if the tile below has a Pawn.
+                        !ColorMatches(pawn, endPoint))
+                    {
+                        if (board[endPoint.Row - 1, endPoint.Column].Figure.Name == "Pawn")
+                        {
+                            Pawn takenPawn = (Pawn)board[endPoint.Row - 1, endPoint.Column].Figure;
+                            if (takenPawn.DoubleMove && takenPawn.MovesSinceDoubleMove == 1)
+                            {
+                                move.IsAllowed = true;
+                                move.FigureTaken = true;
+                                move.IsEnPassant = true;
+                                return move;
+                            }
+                        }
+                    }
                 }
                 if (pawn.HaveMoved)
                 {
@@ -86,6 +120,7 @@ namespace ChessMi.Core.Services
                     {
                         move.IsAllowed = true;
                         pawn.HaveMoved = true;
+                        pawn.DoubleMove = true;
                         return move;
                     }
                 }
@@ -515,8 +550,28 @@ namespace ChessMi.Core.Services
             figure.Row = endPoint.Row;
             figure.Column = endPoint.Column;
 
+
             endPoint.Row = tempRow;
             endPoint.Column = tempColumn;
+
+            foreach (var tile in board)
+            {
+                if (tile.Figure?.Name == "Pawn")
+                {
+                    Pawn pawn = (Pawn)tile.Figure;
+                    if(pawn.DoubleMove)
+                    {
+                        pawn.MovesSinceDoubleMove++;
+                    }
+                }
+            }
+
+            if (move.IsEnPassant)
+            {
+                int color = figure.Color == Color.White ? 1 : -1;
+                board[figure.Row + color, figure.Column].Figure = new Empty(endPoint.Row, endPoint.Column);
+                // i += (queen.Column > endPoint.Column ? -1 : 1))
+            }
         }
 
         public bool MovesInBoard(int[] moves)

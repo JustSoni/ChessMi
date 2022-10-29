@@ -9,8 +9,12 @@ namespace ChessMi.Core.Data.Models
         {
             Name = "Pawn";
             HaveMoved = false;
+            DoubleMove = false;
+            MovesSinceDoubleMove = 0;
         }
 
         public bool HaveMoved { get; set; }
+        public bool DoubleMove { get; set; }
+        public int MovesSinceDoubleMove { get; set; }
     }
 }

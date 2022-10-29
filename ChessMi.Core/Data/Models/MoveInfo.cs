@@ -6,8 +6,10 @@
         {
             IsAllowed = isAllowed;
             FigureTaken = false;
+            IsEnPassant = false;
         }
         public bool IsAllowed { get; set; }
         public bool FigureTaken { get; set; }
+        public bool IsEnPassant { get; set; }
     }
 }
