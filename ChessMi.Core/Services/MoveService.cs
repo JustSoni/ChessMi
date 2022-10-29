@@ -570,8 +570,13 @@ namespace ChessMi.Core.Services
             {
                 int color = figure.Color == Color.White ? 1 : -1;
                 board[figure.Row + color, figure.Column].Figure = new Empty(endPoint.Row, endPoint.Column);
-                // i += (queen.Column > endPoint.Column ? -1 : 1))
             }
+
+            if(figure.Name=="Pawn" && (figure.Row==0 || figure.Row==7))
+            {
+                board = Promotion(board, figure);
+            }
+
         }
 
         public bool MovesInBoard(int[] moves)
@@ -591,6 +596,39 @@ namespace ChessMi.Core.Services
         private bool ColorMatches(Figure a, Figure b)
         {
             return a.Color == b.Color;
+        }
+
+        private Tile[,] Promotion(Tile[,] board, Figure figure)
+        {
+            Console.WriteLine("Please pick to what figure to promote the pawn: [Queen, Knight, Rook, Bishop]");
+            string title = Console.ReadLine();
+            title.ToLower();
+
+            while(true)
+            {
+                if (title == "queen")
+                {
+                    board[figure.Row, figure.Column].Figure = new Queen(figure.Row, figure.Column, figure.Color);
+                    break;
+                }
+                if (title == "knight")
+                {
+                    board[figure.Row, figure.Column].Figure = new Knight(figure.Row, figure.Column, figure.Color);
+                    break;
+                }
+                if (title == "rook")
+                {
+                    board[figure.Row, figure.Column].Figure = new Rook(figure.Row, figure.Column, figure.Color);
+                    break;
+                }
+                if (title == "bishop")
+                {
+                    board[figure.Row, figure.Column].Figure = new Bishop(figure.Row, figure.Column, figure.Color);
+                    break;
+                }
+            }
+
+            return board;
         }
     }
 }
