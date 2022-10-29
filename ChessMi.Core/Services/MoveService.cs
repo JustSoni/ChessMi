@@ -76,5 +76,15 @@ namespace ChessMi.Core.Services
         {
             throw new NotImplementedException();
         }
+
+        private bool IsEmpty(Figure figure)
+        {
+            return figure.Name == "Empty";
+        }
+
+        private bool ColorMatches(Figure a, Figure b)
+        {
+            return a.Color == b.Color;
+        }
     }
 }
