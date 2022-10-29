@@ -158,7 +158,41 @@ namespace ChessMi.Core.Services
 
         public MoveInfo CheckLegalMove(Tile[,] board, King king, Figure endPoint)
         {
-            throw new NotImplementedException();
+            if (this.ColorMatches(king, endPoint))
+            {
+                return new MoveInfo(false);
+            }
+
+            MoveInfo move = new MoveInfo(false);
+
+            if (!IsEmpty(endPoint)) // No matter what if there is a figure at the given position it will take it only if the move is valid.
+            {
+                move.FigureTaken = true;
+            }
+
+            int deltaRow = king.Row - endPoint.Row;
+            int deltaColumn = king.Column - endPoint.Column;
+
+            if (deltaRow == 0 && deltaColumn == 0)//If source == destination
+            {
+                return new MoveInfo(false);
+            }
+
+            //TODO: Consider adding here if the move might be in check.
+
+
+            if (!IsEmpty(endPoint)) // No matter what if there is a figure at the given position it will take it only if the move is valid.
+            {
+                move.FigureTaken = true;
+            }
+
+            if (Math.Abs(deltaRow) < 1 || Math.Abs(deltaColumn) < 1)
+            {
+                move.IsAllowed = true;
+                return move;
+            }
+
+            return new MoveInfo(false);
         }
 
         public MoveInfo CheckLegalMove(Tile[,] board, Figure figure, Figure endPoint)
