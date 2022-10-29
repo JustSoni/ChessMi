@@ -231,7 +231,63 @@ namespace ChessMi.Core.Services
 
         public MoveInfo CheckLegalMove(Tile[,] board, Rook rook, Figure endPoint)
         {
-            throw new NotImplementedException();
+            if (this.ColorMatches(rook, endPoint))
+            {
+                return new MoveInfo(false);
+            }
+
+            MoveInfo move = new MoveInfo(false);
+
+
+            if (!IsEmpty(endPoint)) // No matter what if there is a figure at the given position it will take it only if the move is valid.
+            {
+                move.FigureTaken = true;
+            }
+
+            // Vertically
+            if (rook.Column == endPoint.Column)
+            {
+                for (int i = rook.Row; i != endPoint.Row;
+                    i += (rook.Row > endPoint.Row ? -1 : 1)) //if Row Rook's row > than the it means that the rook is moving upwards so it's -1 if not it goes down and it is +1
+                {
+                    if (i == rook.Row)
+                    {
+                        continue;
+                    }
+
+                    if (!IsEmpty(board[i, rook.Column].Figure))
+                    {
+                        return new MoveInfo(false);
+                    }
+                }
+
+                move.IsAllowed = true;
+                return move;
+            }
+
+            // Horizontally
+            if (rook.Row == endPoint.Row)
+            {
+                for (
+                    int i = rook.Column + 1; i != endPoint.Column;
+                    i += (rook.Column > endPoint.Column ? -1 : 1)) // Same logic with the horizontal move. <->
+                {
+                    if (i == rook.Column)
+                    {
+                        continue;
+                    }
+
+                    if (!IsEmpty(board[rook.Row, i].Figure))
+                    {
+                        return new MoveInfo(false);
+                    }
+                }
+
+                move.IsAllowed = true;
+                return move;
+            }
+
+            return new MoveInfo(false);
         }
         public MoveInfo CheckLegalMove(Tile[,] board, Queen queen, Figure endPoint)
         {
