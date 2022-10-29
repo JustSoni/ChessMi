@@ -16,6 +16,7 @@ namespace ChessMi.Core.Services.Interfaces
         MoveInfo CheckLegalMove(Tile[,] board, Bishop bishop, Figure endPoint);
 
         MoveInfo CheckLegalMove(Tile[,] board, Rook rook, Figure endPoint);
+        MoveInfo CheckLegalMove(Tile[,] board, Queen Queen, Figure endPoint);
 
         MoveInfo CheckLegalMove(Tile[,] board, King king, Figure endPoint);
 

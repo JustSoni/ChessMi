@@ -155,6 +155,10 @@ namespace ChessMi.Core.Services
         {
             throw new NotImplementedException();
         }
+        public MoveInfo CheckLegalMove(Tile[,] board, Queen queen, Figure endPoint)
+        {
+            throw new NotImplementedException();
+        }
 
         public MoveInfo CheckLegalMove(Tile[,] board, King king, Figure endPoint)
         {
