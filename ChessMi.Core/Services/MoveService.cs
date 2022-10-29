@@ -53,6 +53,44 @@ namespace ChessMi.Core.Services
                 }
             }
 
+            if (pawn.Color == Color.Black)
+            {
+                //One tile move downwards
+                if (pawn.Row - endPoint.Row == -1)
+                {
+                    //If the move is vertical
+                    if (pawn.Column == endPoint.Column &&
+                        IsEmpty(endPoint))
+                    {
+                        move.IsAllowed = true;
+                        return move;
+                    }
+                    //If the move is diagonal in order to take a figure
+                    if (Math.Abs(endPoint.Column - pawn.Column) == 1 &&
+                        !IsEmpty(endPoint) &&
+                        !ColorMatches(pawn, endPoint))
+                    {
+                        move.IsAllowed = true;
+                        move.FigureTaken = true;
+                        return move;
+                    }
+                }
+                if (pawn.HaveMoved)
+                {
+                    return new MoveInfo(false);
+                }
+                if (pawn.Row - endPoint.Row == -2)
+                {
+                    if (pawn.Column == endPoint.Column &&
+                        IsEmpty(endPoint))
+                    {
+                        move.IsAllowed = true;
+                        pawn.HaveMoved = true;
+                        return move;
+                    }
+                }
+            }
+
             return new MoveInfo(false);
 
         }
