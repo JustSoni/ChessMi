@@ -1,4 +1,5 @@
-﻿using ChessMi.Core.Data.Models;
+﻿using ChessMi.Core.Data.Enums;
+using ChessMi.Core.Data.Models;
 using ChessMi.Core.Services.Interfaces;
 
 namespace ChessMi.Core.Services
@@ -7,7 +8,47 @@ namespace ChessMi.Core.Services
     {
         public MoveInfo CheckLegalMove(Tile[,] board, Pawn pawn, Figure endPoint)
         {
-            throw new NotImplementedException();
+            if (this.ColorMatches(pawn, endPoint))
+            {
+                return new MoveInfo(false);
+            }
+
+            MoveInfo move = new MoveInfo(false);
+            if (pawn.Color == Color.White)
+            {
+                //One tile move upwards
+                if (pawn.Row - endPoint.Row == 1)
+                {
+                    //If the move is vertical
+                    if (pawn.Column == endPoint.Column &&
+                        IsEmpty(endPoint))
+                    {
+                        move.IsAllowed = true;
+                        return move;
+
+                    }
+                    //If the move is diagonal in order to take a figure
+                    if (Math.Abs(endPoint.Column - pawn.Column) == 1 &&
+                        !IsEmpty(endPoint) &&
+                        !ColorMatches(pawn, endPoint))
+                    {
+                        move.IsAllowed = true;
+                        return move;
+                    }
+                }
+                if (pawn.Row - endPoint.Row == 2)
+                {
+                    if (pawn.Column == endPoint.Column &&
+                        IsEmpty(endPoint))
+                    {
+                        move.IsAllowed = true;
+                        return move;
+                    }
+                }
+            }
+
+            return new MoveInfo(false);
+
         }
 
         public MoveInfo CheckLegalMove(Tile[,] board, Knight knight, Figure endPoint)
