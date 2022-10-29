@@ -37,7 +37,7 @@ namespace ChessMi.Core.Services
                         return move;
                     }
                 }
-                if(pawn.HaveMoved)
+                if (pawn.HaveMoved)
                 {
                     return new MoveInfo(false);
                 }
