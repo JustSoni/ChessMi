@@ -44,4 +44,19 @@ while (true)
 
     int row2 = translatedMove[2];
     int col2 = translatedMove[3];
+
+    Figure source = board[row1, col1].Figure;
+    Figure destination = board[row2, col2].Figure;
+
+    move = service.CheckLegalMove(board, source, destination);
+
+    if (move.IsAllowed)
+    {
+        service.MakeMove(board, source, destination, move); // TODO: NOT ADDED YET.
+        BoardDrawerService.DrawBoard(board); // ALSO NOT ADDED YET >.<
+    }
+    else
+    {
+        Console.WriteLine("Invalid move! The piece can't move there.");
+    }
 }
