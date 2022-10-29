@@ -10,6 +10,8 @@ MoveService service = new MoveService();
 
 MoveInfo move = new MoveInfo(false);
 
+MoveInterpreterService interpreter = new MoveInterpreterService();
+
 string moveInput = String.Empty;
 
 while (true)
@@ -26,4 +28,20 @@ while (true)
     {
         break;
     }
+
+    int[] translatedMove = interpreter.Translate(moveInput);
+
+    Console.WriteLine(String.Join(' ', translatedMove.Select(x => x.ToString()).ToArray())); // Too see the coordinates
+
+    if (!service.MovesInBoard(translatedMove))
+    {
+        Console.WriteLine("Invlaid move! There is no such tile!");
+        continue;
+    }
+
+    int row1 = translatedMove[0];
+    int col1 = translatedMove[1];
+
+    int row2 = translatedMove[2];
+    int col2 = translatedMove[3];
 }
