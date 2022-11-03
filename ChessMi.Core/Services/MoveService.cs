@@ -467,6 +467,7 @@ namespace ChessMi.Core.Services
                 Rook rook = (Rook)endPoint;
                 rook.HaveMoved = true;
 
+                move.IsCastling = true;
                 move.IsAllowed = true;
                 return move;
             }
@@ -490,7 +491,7 @@ namespace ChessMi.Core.Services
                 return new MoveInfo(false);
             }
 
-            //TODO: Consider adding here if the move might be in check.
+            //TODO: Add Check.
 
 
             if (Math.Abs(deltaRow) < 2 && Math.Abs(deltaColumn) < 2)
@@ -542,7 +543,7 @@ namespace ChessMi.Core.Services
 
         public void MakeMove(Tile[,] board, Figure figure, Figure endPoint, MoveInfo move)
         {
-            if (figure.Name == "King" && endPoint.Name == "Rook")
+            if (move.IsCastling)
             {
                 board = Castle(board, figure, endPoint);
                 return;

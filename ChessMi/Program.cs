@@ -14,8 +14,11 @@ MoveInterpreterService interpreter = new MoveInterpreterService();
 
 string moveInput = String.Empty;
 
+int turn = 0;
+
 while (true)
 {
+    PrintTurn(ref turn);
     moveInput = Console.ReadLine();
 
     if (!Regex.IsMatch(moveInput, "^[a-h][1-8][-][a-h][1-8]$"))
@@ -56,5 +59,19 @@ while (true)
     else
     {
         Console.WriteLine("Invalid move! The piece can't move there.");
+    }
+}
+
+void PrintTurn(ref int turn)
+{
+    if(turn == 0)
+    {
+        Console.WriteLine("White's turn:");
+        turn++;
+    }
+    else
+    {
+        Console.WriteLine("Black's turn:");
+        turn--;
     }
 }

@@ -7,9 +7,11 @@
             IsAllowed = isAllowed;
             FigureTaken = false;
             IsEnPassant = false;
+            IsCastling = false;
         }
         public bool IsAllowed { get; set; }
         public bool FigureTaken { get; set; }
         public bool IsEnPassant { get; set; }
+        public bool IsCastling { get; set; }
     }
 }
