@@ -469,6 +469,28 @@ namespace ChessMi.Core.Services
 
                 move.IsCastling = true;
                 move.IsAllowed = true;
+                if (king.Column > rook.Column)
+                {
+                    for (int i = 1; i < 4; i++)
+                    {
+                        if (board[king.Row, i].Figure.Name != "Empty")
+                        {
+                            move.IsAllowed = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < 3; i++)
+                    {
+                        if (board[king.Row, i].Figure.Name != "Empty")
+                        {
+                            move.IsAllowed = false;
+                            break;
+                        }
+                    }
+                }
                 return move;
             }
 
@@ -667,6 +689,9 @@ namespace ChessMi.Core.Services
                     }
                     board[king.Row, king.Column - 2].Figure = new King(king.Row, king.Column, king.Color);
                     board[king.Row, king.Column - 1].Figure = new Rook(rook.Row, rook.Column, rook.Color);
+
+                    board[king.Row, king.Column].Figure = new Empty(king.Row, king.Column);
+                    board[rook.Row, rook.Column].Figure = new Empty(rook.Row, rook.Column);
                 }
                 else
                 {
