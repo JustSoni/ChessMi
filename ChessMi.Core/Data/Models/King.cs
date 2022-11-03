@@ -9,9 +9,7 @@ namespace ChessMi.Core.Data.Models
         {
             Name = "King";
             HaveMoved = false;
-            IsCastling = false;
         }
         public bool HaveMoved { get; set; }
-        public bool IsCastling { get; set; }
     }
 }
