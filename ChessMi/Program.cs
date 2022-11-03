@@ -50,10 +50,10 @@ while (true)
     Figure source = board[row1, col1].Figure;
     Figure destination = board[row2, col2].Figure;
 
-    if ((source.Color == Color.White && turn == 1) || (source.Color == Color.Black && turn == 0))
+    //if ((source.Color == Color.White && turn == 1) || (source.Color == Color.Black && turn == 0))
     {
-        Console.WriteLine("Invalid player move! It's the other player's turn!");
-        continue;
+        //Console.WriteLine("Invalid player move! It's the other player's turn!");
+        //continue;
     }
 
     move = service.CheckLegalMove(board, source, destination);
