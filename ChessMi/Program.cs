@@ -1,4 +1,5 @@
-﻿using ChessMi.Core.Data.Models;
+﻿using ChessMi.Core.Data.Enums;
+using ChessMi.Core.Data.Models;
 using ChessMi.Core.Services;
 using System.Text.RegularExpressions;
 
@@ -18,7 +19,7 @@ int turn = 0;
 
 while (true)
 {
-    PrintTurn(ref turn);
+    PrintTurn(turn);
     moveInput = Console.ReadLine();
 
     if (!Regex.IsMatch(moveInput, "^[a-h][1-8][-][a-h][1-8]$"))
@@ -49,12 +50,19 @@ while (true)
     Figure source = board[row1, col1].Figure;
     Figure destination = board[row2, col2].Figure;
 
+    if ((source.Color == Color.White && turn == 1) || (source.Color == Color.Black && turn == 0))
+    {
+        Console.WriteLine("Invalid player move! It's the other player's turn!");
+        continue;
+    }
+
     move = service.CheckLegalMove(board, source, destination);
 
     if (move.IsAllowed)
     {
         service.MakeMove(board, source, destination, move); 
-        BoardDrawerService.DrawBoard(board); 
+        BoardDrawerService.DrawBoard(board);
+        UpdateTurn(ref turn);
     }
     else
     {
@@ -62,16 +70,25 @@ while (true)
     }
 }
 
-void PrintTurn(ref int turn)
+void PrintTurn(int turn)
 {
     if(turn == 0)
     {
         Console.WriteLine("White's turn:");
-        turn++;
     }
     else
     {
         Console.WriteLine("Black's turn:");
+    }
+}
+void UpdateTurn(ref int turn)
+{
+    if (turn == 0)
+    {
+        turn++;
+    }
+    else
+    {
         turn--;
     }
 }
