@@ -11,6 +11,7 @@ namespace ChessMi.Core.Data.Models
             Name = "Queen";
         }
 
+
         internal MoveInfo CheckLegalMove(Tile[,] board, Queen queen, Figure endPoint)
         {
             if (MoveService.ColorMatches(queen, endPoint))

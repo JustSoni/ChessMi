@@ -24,66 +24,9 @@ namespace ChessMi.Core.Services
 
                 for (int j = 0; j < BoardColumns; j++)
                 {
-
-                    if (board[i, j].Figure.Name == "Rook")
+                    if (board[i,j].Figure.Name!="Empty")
                     {
-                        Console.Write("| ");
-                        if (board[i, j].Figure.Color == Color.White)
-                            Console.ForegroundColor = ConsoleColor.Green;
-                        else
-                            Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Rook ");
-                        Console.ForegroundColor = ConsoleColor.White;
-                    }
-                    else if (board[i, j].Figure.Name == "Knight")
-                    {
-                        Console.Write("|");
-                        if (board[i, j].Figure.Color == Color.White)
-                            Console.ForegroundColor = ConsoleColor.Green;
-                        else
-                            Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Knight");
-                        Console.ForegroundColor = ConsoleColor.White;
-                    }
-                    else if (board[i, j].Figure.Name == "Bishop")
-                    {
-                        Console.Write("|");
-                        if (board[i, j].Figure.Color == Color.White)
-                            Console.ForegroundColor = ConsoleColor.Green;
-                        else
-                            Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Bishop");
-                        Console.ForegroundColor = ConsoleColor.White;
-                    }
-                    else if (board[i, j].Figure.Name == "Queen")
-                    {
-                        Console.Write("| ");
-                        if (board[i, j].Figure.Color == Color.White)
-                            Console.ForegroundColor = ConsoleColor.Green;
-                        else
-                            Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("Queen");
-                        Console.ForegroundColor = ConsoleColor.White;
-                    }
-                    else if (board[i, j].Figure.Name == "King")
-                    {
-                        Console.Write("|");
-                        if (board[i, j].Figure.Color == Color.White)
-                            Console.ForegroundColor = ConsoleColor.Green;
-                        else
-                            Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(" King ");
-                        Console.ForegroundColor = ConsoleColor.White;
-                    }
-                    else if (board[i, j].Figure.Name == "Pawn")
-                    {
-                        Console.Write("|");
-                        if (board[i, j].Figure.Color == Color.White)
-                            Console.ForegroundColor = ConsoleColor.Green;
-                        else
-                            Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write(" Pawn ");
-                        Console.ForegroundColor = ConsoleColor.White;
+                        DrawFigure(board[i, j].Figure.Name, board[i, j].Figure.Color);
                     }
                     else
                     {
@@ -105,6 +48,29 @@ namespace ChessMi.Core.Services
                 Console.Write($"{letters[i]}      ");
             }
             Console.WriteLine();
+        }
+
+        private static void DrawFigure(string name, Color color)
+        {
+            Console.Write("|");
+            if (color == Color.White)
+                Console.ForegroundColor = ConsoleColor.Green;
+            else
+                Console.ForegroundColor = ConsoleColor.Red;
+            
+            switch (name.Length)
+            {
+                case 4:
+                    Console.Write($" {name} ");
+                    break;
+                case 5:
+                    Console.Write($" {name}");
+                    break;
+                case 6:
+                    Console.Write(name);
+                    break;
+            }
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }

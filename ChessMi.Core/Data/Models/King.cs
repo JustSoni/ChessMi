@@ -13,6 +13,7 @@ namespace ChessMi.Core.Data.Models
         }
         public bool HaveMoved { get; set; }
 
+
         internal MoveInfo CheckLegalMove(Tile[,] board, King king, Figure endPoint)
         {
             MoveInfo move = new MoveInfo(false);
