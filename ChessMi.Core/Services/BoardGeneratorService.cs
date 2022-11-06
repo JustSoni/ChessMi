@@ -19,8 +19,6 @@ namespace ChessMi.Core.Services
             int[] rows = { 0, 1, 6, 7 };//Rows where figures will be generated.
 
             Tile[,] board = new Tile[BoardRows, BoardColumns];
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
 
             for (int i = 0; i < BoardRows; i++)
             {
@@ -47,11 +45,6 @@ namespace ChessMi.Core.Services
                     board[i, j] = tile;
                 }
             }
-
-            watch.Stop();
-            TimeSpan ts = watch.Elapsed;
-            Console.WriteLine("RunTime " + ts.TotalMilliseconds);
-
 
             return board;
         }
