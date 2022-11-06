@@ -3,6 +3,7 @@ using ChessMi.Core.Services.Interfaces;
 using ChessMi.Core.Data.Enums;
 using ChessMi.Core.Data.Models;
 using static ChessMi.Core.Common.GlobalConstants;
+using System.Diagnostics;
 
 namespace ChessMi.Core.Services
 {
@@ -15,13 +16,24 @@ namespace ChessMi.Core.Services
         /// <returns></returns>
         public static Tile[,] Generate() // Could move to Interface
         {
+            int[] rows = { 0, 1, 6, 7 };//Rows where figures will be generated.
+
             Tile[,] board = new Tile[BoardRows, BoardColumns];
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
 
             for (int i = 0; i < BoardRows; i++)
             {
                 for (int j = 0; j < BoardColumns; j++)
                 {
                     Tile tile;
+                    if (!rows.Contains(i))
+                    {
+                        tile =
+                        board[i, j] = new Tile(new Empty(i, j));
+                        continue;
+                    }
+
                     Figure figure = GetFigure(i, j);
 
                     if ((i + j) % 2 == 0)
@@ -32,10 +44,13 @@ namespace ChessMi.Core.Services
                     {
                         tile = new Tile(figure);
                     }
-
                     board[i, j] = tile;
                 }
             }
+
+            watch.Stop();
+            TimeSpan ts = watch.Elapsed;
+            Console.WriteLine("RunTime " + ts.TotalMilliseconds);
 
 
             return board;
