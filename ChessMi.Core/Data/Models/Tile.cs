@@ -2,16 +2,12 @@
 
 namespace ChessMi.Core.Data.Models
 {
-    public class Tile : Position
+    public class Tile
     {
-        public Tile(int row, int column, Color color, Figure figure)
+        public Tile(Figure figure)
         {
-            Row = row;
-            Column = column;
-            Color = color;
             Figure = figure;
         }
-        public Color Color { get; set; }
 
         public Figure? Figure { get; set; }
     }

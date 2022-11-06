@@ -26,11 +26,11 @@ namespace ChessMi.Core.Services
 
                     if ((i + j) % 2 == 0)
                     {
-                        tile = new Tile(i, j, Color.White, figure);
+                        tile = new Tile(figure);
                     }
                     else
                     {
-                        tile = new Tile(i, j, Color.Black, figure);
+                        tile = new Tile(figure);
                     }
 
                     board[i, j] = tile;
